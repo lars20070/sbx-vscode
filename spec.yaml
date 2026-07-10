@@ -11,14 +11,13 @@ sandbox:
     run: ["code", "tunnel"]
 
 network:
+  # We assume a balanced network policy is in place (default). Cannot be set in the spec.yaml file.
+  # sbx policy init balanced
   allowedDomains:
-    - "claude.com:443"
-    - "claude.ai:443"
-    - "platform.claude.com:443"
-    - "downloads.claude.ai:443"
-    - "api.anthropic.com:443"
-    - "go.microsoft.com:443"
-    - "vscode.download.prss.microsoft.com:443"
-    - "main.vscode-cdn.net:443"
-    - "anthropic.gallery.vsassets.io:443"
-    - "anthropic.gallerycdn.vsassets.io:443"
+    # --- VS Code tunnel + editor + Marketplace (not in balanced) ---
+    - "claude.ai:443" # Claude Code sign-in (balanced has claude.com only)
+    - "go.microsoft.com:443" # tunnel / update redirects
+    - "vscode.download.prss.microsoft.com:443" # editor download
+    - "main.vscode-cdn.net:443" # editor CDN
+    - "anthropic.gallery.vsassets.io:443" # claude-code extension gallery
+    - "anthropic.gallerycdn.vsassets.io:443" # claude-code extension CDN
