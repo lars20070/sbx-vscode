@@ -45,9 +45,10 @@ shift $((OPTIND - 1))
 # path to kit directory (parent dir of this script)
 KIT_DIR="$(dirname "$(readlink -f "$0")")"
 
-# path to project workspace
-# default to current working directory, if not explicitly set
-WS_DIR=${1:-$(pwd)}
+# Path to project workspace
+# Default to current working directory, if not explicitly set
+# Resolve to an absolute path so basename works for inputs like "."
+WS_DIR=$(cd "${1:-$(pwd)}" && pwd) || exit 1
 
 # Set sandbox name (basename with lowercase with special chars replaced)
 NAME=$(basename "$WS_DIR")
