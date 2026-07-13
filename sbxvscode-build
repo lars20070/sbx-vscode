@@ -1,8 +1,11 @@
 #! /usr/bin/env bash
 set -e
 
-# Temporary image archive
-TAR="sbx-vscode-arm64.tar"
+# Image name, its temporary archive, and the template ref sbx registers it under.
+# TEMPLATE must match sbx-vscode-arm64:latest in spec.yaml (kept in sync by hand).
+IMAGE="sbx-vscode-arm64"
+TAR="${IMAGE}.tar"
+TEMPLATE="docker.io/library/${IMAGE}:latest"
 
 # Always operate from the kit directory so relative paths resolve
 SCRIPT_PATH="$(readlink -f "$0")"
@@ -10,16 +13,16 @@ KIT_DIR="$(dirname "${SCRIPT_PATH}")"
 cd "${KIT_DIR}"
 
 # Build the image
-docker rmi -f sbx-vscode-arm64:latest 2>/dev/null || true
-docker build --platform linux/arm64 -t sbx-vscode-arm64 ./image
+docker rmi -f "${IMAGE}:latest" 2>/dev/null || true
+docker build --platform linux/arm64 -t "${IMAGE}" ./image
 # docker image ls
 
 # Save the image to tar file
 rm -f "${TAR}"
-docker image save sbx-vscode-arm64 -o "${TAR}"
+docker image save "${IMAGE}" -o "${TAR}"
 
 # Load the image as sbx template
-sbx template rm docker.io/library/sbx-vscode-arm64:latest 2>/dev/null || true
+sbx template rm "${TEMPLATE}" 2>/dev/null || true
 sbx template load "${TAR}"
 rm -f "${TAR}"
 # sbx template ls
