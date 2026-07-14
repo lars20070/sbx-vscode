@@ -20,3 +20,14 @@ caps:
       - "main.vscode-cdn.net:443" # editor CDN
       - "anthropic.gallery.vsassets.io:443" # claude-code extension gallery
       - "anthropic.gallerycdn.vsassets.io:443" # claude-code extension CDN
+      # --- GitHub Copilot (extension runs remotely, so egress is from the sandbox) ---
+      - "api.github.com:443" # Copilot token + user (may already be in balanced)
+      - "*.githubcopilot.com:443" # Copilot Chat language model + completions
+      - "*.individual.githubcopilot.com:443" # individual-plan model endpoint (use *.business/*.enterprise instead for those plans)
+      - "copilot-proxy.githubusercontent.com:443" # completions proxy
+      - "origin-tracker.githubusercontent.com:443" # completions
+      - "default.exp-tas.com:443" # feature flags / experimentation
+      - "copilot-telemetry.githubusercontent.com:443" # telemetry (optional)
+      # --- OpenRouter (unified LLM API) ---
+      - "openrouter.ai:443" # API base https://openrouter.ai/api/v1 + auth
+      - "*.openrouter.ai:443" # regional in-region routing (e.g. eu.openrouter.ai)
