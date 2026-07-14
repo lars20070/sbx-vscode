@@ -11,9 +11,9 @@ USER agent
 
 RUN code --extensions-dir ~/.vscode-server/extensions/ --install-extension anthropic.claude-code
 
-# Inside a sandbox, SSH (port 22) is blocked, so route GitHub over HTTPS (the proxy injects
-# credentials for HTTPS). This rewrites git@github.com remotes -- including an SSH `origin`
-# shared from the host -- to HTTPS, without touching the host's own Git config.
+# SSH to GitHub is blocked inside the sandbox, so rewrite GitHub remotes to HTTPS.
+# The first rule covers git@github.com: URLs; the second covers ssh://git@github.com/
+# URLs. Both are needed because some repositories use one form and some use the other.
 RUN git config --global url."https://github.com/".insteadOf "git@github.com:" && \
   git config --global --add url."https://github.com/".insteadOf "ssh://git@github.com/"
 
