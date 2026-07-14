@@ -16,3 +16,7 @@ RUN code --extensions-dir ~/.vscode-server/extensions/ --install-extension anthr
 # shared from the host -- to HTTPS, without touching the host's own Git config.
 RUN git config --global url."https://github.com/".insteadOf "git@github.com:" && \
   git config --global --add url."https://github.com/".insteadOf "ssh://git@github.com/"
+
+# Liveness check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+  CMD code --version || exit 1
