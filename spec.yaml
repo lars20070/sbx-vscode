@@ -28,3 +28,6 @@ caps:
       - "origin-tracker.githubusercontent.com:443" # completions
       - "default.exp-tas.com:443" # feature flags / experimentation
       - "copilot-telemetry.githubusercontent.com:443" # telemetry (optional)
+      # --- OpenRouter (unified LLM API) ---
+      - "openrouter.ai:443" # API base https://openrouter.ai/api/v1 + auth
+      - "*.openrouter.ai:443" # regional in-region routing (e.g. eu.openrouter.ai)
